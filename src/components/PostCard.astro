@@ -1,0 +1,45 @@
+---
+interface Props {
+  title: string;
+  date: Date;
+  slug: string;
+  lang: string;
+}
+
+const { title, date, slug, lang } = Astro.props;
+
+const formattedDate = new Intl.DateTimeFormat(lang === 'pt' ? 'pt-BR' : lang === 'en' ? 'en-US' : 'es-ES', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+}).format(date);
+---
+
+<article class="post-card">
+  <time datetime={date.toISOString()}>{formattedDate}</time>
+  <a href={`/${lang === 'es' ? '' : lang}/blog/${slug}`}>{title}</a>
+</article>
+
+<style>
+  .post-card {
+    margin-bottom: 1.5rem;
+  }
+
+  time {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 0.25rem;
+  }
+
+  .post-card a {
+    display: inline-block;
+    font-size: 1.1rem;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .post-card a:hover {
+    text-decoration: underline;
+  }
+</style>

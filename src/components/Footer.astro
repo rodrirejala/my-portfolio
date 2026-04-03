@@ -1,0 +1,50 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <p>
+    <span>Made with</span>
+    <a href="https://astro.build" target="_blank" rel="noopener">Astro</a>
+    <span>&copy; {currentYear}</span>
+  </p>
+  <div class="social">
+    <a href="https://github.com/rodrirejala" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://www.linkedin.com/in/rodrigorejala" target="_blank" rel="noopener">LinkedIn</a>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    padding: var(--space);
+    max-width: var(--max-width);
+    margin: 0 auto;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+
+  .footer p {
+    margin-bottom: 0.5rem;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .social {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  .social a {
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+
+  .social a:hover {
+    color: var(--text);
+    text-decoration: underline;
+  }
+</style>

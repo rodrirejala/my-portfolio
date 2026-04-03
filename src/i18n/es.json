@@ -1,0 +1,24 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "blog": "Blog",
+    "about": "Sobre mí"
+  },
+  "home": {
+    "title": "Hola, soy Rodrigo Rejala",
+    "intro": "Desarrollo con Linux, Python, Astro y un poco de frontend",
+    "projects": "Proyectos",
+    "contact": "Contacto"
+  },
+  "blog": {
+    "title": "Blog",
+    "readMore": "Leer más",
+    "noPosts": "No hay posts aún"
+  },
+  "footer": {
+    "madeWith": "Hecho con"
+  },
+  "common": {
+    "back": "Volver"
+  }
+}

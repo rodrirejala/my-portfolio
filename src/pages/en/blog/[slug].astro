@@ -1,0 +1,109 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+import { useTranslations } from '../../../i18n/utils';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map(post => ({
+    params: { slug: post.id.replace(/\.md$/, '') },
+    props: { post },
+  }));
+}
+
+const lang = 'en';
+const t = useTranslations(lang);
+const posts = await getCollection('blog');
+
+const { slug } = Astro.params;
+const post = posts.find(p => p.id.replace(/\.md$/, '') === slug);
+if (!post) {
+  return Astro.redirect('/en/blog');
+}
+
+const { Content } = await render(post);
+
+const formattedDate = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+}).format(post.data.date);
+---
+
+<BaseLayout title={post.data.title}>
+  <article class="post">
+    <header>
+      <a href="/en/blog" class="back">{t('common.back')}</a>
+      <time>{formattedDate}</time>
+      <h1>{post.data.title}</h1>
+    </header>
+    <div class="content">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .post {
+    max-width: var(--max-width);
+  }
+
+  header {
+    margin-bottom: 2rem;
+  }
+
+  .back {
+    display: inline-block;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    margin-bottom: 1rem;
+  }
+
+  .back:hover {
+    text-decoration: underline;
+  }
+
+  time {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .content {
+    line-height: 1.7;
+  }
+
+  .content :global(h2) {
+    font-size: 1.25rem;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .content :global(h3) {
+    font-size: 1.1rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .content :global(p) {
+    margin-bottom: 1rem;
+  }
+
+  .content :global(ul), .content :global(ol) {
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+  }
+
+  .content :global(blockquote) {
+    border-left: 3px solid var(--border);
+    padding-left: 1rem;
+    margin: 1rem 0;
+    color: var(--text-muted);
+  }
+</style>
